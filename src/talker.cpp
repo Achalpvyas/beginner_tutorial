@@ -1,13 +1,13 @@
-/**
- * @file listener.cpp
- * @brief publishing messages.
- * @author Achal Vyas
- * "Copyright [2019] <Achal Vyas>"
- */
-#include "sstream"
-#include "std_msgs/String.h"
 #include "ros/ros.h"
-int main(int argc, char **argv) {
+#include "std_msgs/String.h"
+
+#include <sstream>
+
+/**
+ * This tutorial demonstrates simple sending of messages over the ROS system.
+ */
+int main(int argc, char **argv)
+{
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
    * any ROS arguments and name remapping that were provided at the command line.
@@ -53,14 +53,15 @@ int main(int argc, char **argv) {
    * a unique string for each message.
    */
   int count = 0;
-  while (ros::ok()) {
+  while (ros::ok())
+  {
     /**
      * This is a message object. You stuff it with data, and then publish it.
      */
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << "Hi, this is Pruthvi. Can you hear me ? " << count;
+    ss << "My name is achal " << count;
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());
