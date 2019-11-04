@@ -26,12 +26,12 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg) {
 
 int main(int argc, char **argv) {
   /**
-   * The ros::init() function initializes the ros node
+   * The ros::init() starts ros node
    */
   ros::init(argc, argv, "listener");
 
   /**
-   * NodeHandle maintains the communication of node with ROS
+   * NodeHandle estalishes and keeps contact with the node
    */
   ros::NodeHandle n;
 
