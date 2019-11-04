@@ -1,0 +1,8 @@
+#request
+string originalstream
+
+---
+#response
+string newstream
+
+
