@@ -12,17 +12,18 @@
 *THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT *LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT *HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT *LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON *ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE *USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  
 /**
- * @file 		  talker.cpp
+ * @file 		talker.cpp
  * @author 		Achal Vyas
- * @copyright BSD-3
+ * @copyright 		BSD
+ * @brief 		ROS Publisher
  */
 
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <sstream>
-#include "beginner_tutorials/change_string_output.h"
+#include "beginner_tutorials/ChangeString.h"
 
-extern std::string text = "My name is Achal Vyas ";
+extern std::string stream = "My name is Achal Vyas ";
 
 /**
  * @brief a function that changes the stream message
@@ -30,11 +31,11 @@ extern std::string text = "My name is Achal Vyas ";
  * @param res represents the data being provided by the client
  * @return bool
  */
-bool newtext(beginner_tutorials::change_string_output::Request &req,
-                beginner_tutorials::change_string_output::Response &res) {
-  text = req.originaltext;
+bool newstream(beginner_tutorials::ChangeString::Request &req,
+                beginner_tutorials::ChangeString::Response &res) {
+  stream = req.originalstream;
   ROS_INFO_STREAM("The string is changed to the new string: ");
-  res.newtext = req.originaltext;
+  res.newstream = req.originalstream;
   return true;
 }
 /**
@@ -81,8 +82,8 @@ int main(int argc, char **argv) {
       > ("chatter", 1000);
 
   // For service to changeBaseOutputString
-  ros::ServiceServer server = n.advertiseService("change_string_output",
-                                                 newtext);
+  ros::ServiceServer server = n.advertiseService("ChangeString",
+                                                 newstream);
   int count = 0;
   while (ros::ok()) {
     ROS_DEBUG_STREAM_ONCE("Current frequency: " << freq);
@@ -93,7 +94,7 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << text;
+    ss << stream;
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());
