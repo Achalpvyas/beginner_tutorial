@@ -2,20 +2,19 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-orange.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 ## Overview
-ROS is an opensource robotics operating system developed and maintained by Open Source Robotics Foundation 
-This tutorial familiarizes with the ros graph and its elements such as rosnode, rostopic, ros messages, ros master, ros services.
-The project beginner_tutorials is about creating publisher and subscriber nodes and transferring messages between them.
+
+This beginner_tutorials creates publisher and subscriber nodes and transfer messages between them.
 
 ## Dependencies
 
- Catkin ([link](http://wiki.ros.org/catkin)) 
- Ubuntu 16.04 Xenial ([link](http://releases.ubuntu.com/16.04/))
- ROS kinetic ([link](http://wiki.ros.org/kinetic))
+
+ Ubuntu 16.04 Xenial 
+ ROS kinetic 
+ Catkin
 
 ## Install ROS
 
 ```
-Open a terminal
 ~$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 ~$ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 ~$ sudo apt-get update
@@ -31,65 +30,52 @@ Open a terminal
 ## Building Workspace and Packages
 
 ```
-Open a terminal
 ~$ mkdir -p ~/catkin_ws
 ~$ cd catkin_ws
 ~$ mkdir src
 ~$ catkin_make
 ~$ source devel/setup.bash
 ~$ cd src
-~$ git clone https://github.com/Pruthvi-Sanghavi/beginner_tutorials.git
+~$ git clone https://github.com/Achalpvyas/beginner_tutorials.git
 ~$ cd ..
-~$ catkin_make
 ~$ source devel/setup.bash 
 ```
 
 ## Run Publisher and Subscriber nodes
-
-Code for publisher and subscriber are available at [link](http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28c%2B%2B%29)
-Code for Debug is available at [link](http://wiki.ros.org/ROS/Tutorials/ExaminingPublisherSubscriber)
+Publish, Subscribe and Examine
+[link](http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28c%2B%2B%29)
+[link](http://wiki.ros.org/ROS/Tutorials/ExaminingPublisherSubscriber)
 
 ```
-Open Terminal - 1
 ~$ roscore
 
-Open Terminal - 2
 ~$ cd catkin_ws
 ~$ rosrun beginner_tutorials talker <frequency>
 
-Open Terminal - 3
 ~$ rosrun beginner_tutorials listener
 
 ```
 
-## Using Launch
+## Launch file
 
 ```
-Open a terminal
+
 ~$ cd catkin_ws
 ~$ source devel/setup.bash
 ~$ roslaunch --screen beginner_tutorials Week10_HW.launch
 
-To terminate
-Press Ctrl+C.
 ```
 
 ## ROS Service
 
 ```
-~$ rosservice call /changeText "sample text"
-```
-## Google Styling
-
-### cppcheck
-
+~$ rosservice call /ChangeString "what is your name"
 ```
 
+## ROS Logger
 
 ```
-### cpplint
-```
+rqt_console
+rqt_logger_level
 
-
-```
 
