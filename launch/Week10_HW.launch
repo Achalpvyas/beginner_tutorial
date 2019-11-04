@@ -12,7 +12,7 @@
 		type="listener"		
 		name="listener"
 		
-    pkg="beginner_tutorials"
+   		pkg="beginner_tutorials"
 		output="screen"
 		launch-prefix = "gnome-terminal -e"
   />
