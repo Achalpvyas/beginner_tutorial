@@ -1,20 +1,19 @@
-# ROS Publisher Subscriber Beginner Tutorials
-[![License](https://img.shields.io/badge/License-BSD%203--Clause-orange.svg)](https://opensource.org/licenses/BSD-3-Clause)
+# ROS Beginner Tutorials
+[![License: BSD](https://opensource.org/licenses/BSD-3-Clause)
 
 ## Overview
-
-This beginner_tutorials creates publisher and subscriber nodes and transfer messages between them.
+Testing tf, bag files.
 
 ## Dependencies
 
-
- Ubuntu 16.04 Xenial 
  ROS kinetic 
- Catkin
+ Catkin 
+ Ubuntu 16.04 Xenial 
 
 ## Install ROS
 
 ```
+Open a terminal
 ~$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 ~$ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 ~$ sudo apt-get update
@@ -27,7 +26,8 @@ This beginner_tutorials creates publisher and subscriber nodes and transfer mess
 ~$ sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
 ```
 
-## Building Workspace and Packages
+### Workspace and Packages
+Use the following commands on the terminal to build the workspace and the package with the relevant dependencies.
 
 ```
 ~$ mkdir -p ~/catkin_ws
@@ -36,46 +36,110 @@ This beginner_tutorials creates publisher and subscriber nodes and transfer mess
 ~$ catkin_make
 ~$ source devel/setup.bash
 ~$ cd src
-~$ git clone https://github.com/Achalpvyas/beginner_tutorials.git
+~$ git clone https://github.com/Achalpvyas/beginner_tutorials
 ~$ cd ..
+~$ catkin_make
 ~$ source devel/setup.bash 
 ```
-
-## Run Publisher and Subscriber nodes
-Publish, Subscribe and Examine
-[link](http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28c%2B%2B%29)
-[link](http://wiki.ros.org/ROS/Tutorials/ExaminingPublisherSubscriber)
+## Using Launch
 
 ```
-~$ roscore
-
-~$ cd catkin_ws
-~$ rosrun beginner_tutorials talker <frequency>
-
-~$ rosrun beginner_tutorials listener
-
-```
-
-## Launch file
-
-```
-
-~$ cd catkin_ws
-~$ source devel/setup.bash
-~$ roslaunch --screen beginner_tutorials Week10_HW.launch
+$ cd catkin_ws
+$ source devel/setup.bash
+$ roslaunch beginner_tutorials homework11.launch
 
 ```
 
 ## ROS Service
+To change the string output replace "Changed String" to something.
+```
+Open a terminal
+$ cd catkin_ws
+$ source devel/setup.bash
+$ roslaunch beginner_tutorials homework11.launch
+
+Open a Terminal
+$ cd catkin_ws
+$ source devel/setup.bash
+$ rosservice call /changeString "stream change"
+```
+
+## tf Frame verification
+
+### Using tf_echo
+```
+Open a terminal
+
+$ cd catkin_ws
+$ source devel/setup.bash
+$ rosrun tf tf_echo world talk
+```
+
+### Using view_frames
+```
+Open a terminal
+$ cd catkin_ws
+$ rosrun tf view_frames
+```
+
+## ROS Unit tests
+Run the unit testing in the new terminal.
+Open a terminal
+### Testing using Launch
+```
+$ cd catkin_ws
+$ source devel/setup.bash
+$ rostest beginner_tutorials test.launch
 
 ```
-~$ rosservice call /ChangeString "what is your name"
+
+## Bag files (Play and Record)
+
+### Record
+After launching the nodes
+
+Open terminal
+```
+$ rosscore
 ```
 
-## ROS Logger
-
+Open terminal
 ```
-rqt_console
-rqt_logger_level
+$ cd catkin_ws
+$ source devel/setup.bash
+$ rosrun beginner_tutorials talker
+```
+Open terminal
+```
+$ cd catkin_ws
+$ source devel/setup.bash
+$ cd src/beginner_tutorials/Results
+$ rosbag record -a
 
+ctrl + c after 15 seconds to terminate
+```
 
+### Play
+
+First we will run the listener node.
+
+Open terminal 
+```
+$ cd catkin_ws
+$ source devel/setup.bash
+$ rosrun beginner_tutorials listener
+```
+Now will play the recorded talker bag file
+Open terminal 
+```
+$ cd catkin_ws
+$ source devel/setup.bash
+$ cd src/beginner_tutorials/Results
+$ rosbag play message_record.bag
+```
+
+## Google Styling
+```
+$ roscd beginner_tutorials
+$ cd Results
+```
