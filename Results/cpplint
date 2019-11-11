@@ -1,0 +1,7 @@
+achal@Achal:~/Desktop/catkin$ cpplint --recursive --extensions=cpp,hpp ~/catkin_ws/src/beginner_tutorials/
+/home/achal/catkin_ws/src/beginner_tutorials/src/talker.cpp:34:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::ChangeString::Request &req  [runtime/references] [2]
+/home/achal/catkin_ws/src/beginner_tutorials/src/talker.cpp:35:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::ChangeString::Response &res  [runtime/references] [2]
+Done processing /home/achal/catkin_ws/src/beginner_tutorials/src/talker.cpp
+/home/achal/catkin_ws/src/beginner_tutorials/src/listener.cpp:38:  Weird number of spaces at line-start.  Are you using a 2-space indent?  [whitespace/indent] [3]
+/home/achal/catkin_ws/src/beginner_tutorials/src/listener.cpp:38:  Line ends in whitespace.  Consider deleting these extra spaces.  [whitespace/end_of_line] [4]
+Done processing /home/achal/catkin_ws/src/beginner_tutorials/src/listener.cpp
