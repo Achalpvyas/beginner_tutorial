@@ -10,20 +10,22 @@
 *3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this *software without specific prior written permission.
 
 *THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT *LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT *HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT *LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON *ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE *USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- 
+ */
 /**
- * @file 		talker.cpp
- * @author 		Achal Vyas
- * @copyright 		BSD
- * @brief 		ROS Publisher
+ * @file 		 talker.cpp
+ * @author 		 Achal Vyas
+ * @copyright            BSD
+ * @brief 		 ROS Publisher
  */
 
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <sstream>
-#include "beginner_tutorials/ChangeString.h"
+#include <tf/transform_broadcaster.h>
+#include "beginner_tutorials/changeString.h"
 
-extern std::string stream = "My name is Achal Vyas ";
+extern std::string stream = " MY NAME IS ACHAL ";
+
 
 /**
  * @brief a function that changes the stream message
@@ -31,11 +33,11 @@ extern std::string stream = "My name is Achal Vyas ";
  * @param res represents the data being provided by the client
  * @return bool
  */
-bool newstream(beginner_tutorials::ChangeString::Request &req,
-                beginner_tutorials::ChangeString::Response &res) {
-  stream = req.originalstream;
+bool streamUpdate(beginner_tutorials::changeString::Request &req,
+                beginner_tutorials::changeString::Response &res) {
+  stream = req.stream;
   ROS_INFO_STREAM("The string is changed to the new string: ");
-  res.newstream = req.originalstream;
+  res.streamUpdate = req.stream;
   return true;
 }
 /**
@@ -82,8 +84,8 @@ int main(int argc, char **argv) {
       > ("chatter", 1000);
 
   // For service to changeBaseOutputString
-  ros::ServiceServer server = n.advertiseService("ChangeString",
-                                                 newstream);
+  ros::ServiceServer server = n.advertiseService("changeString",
+                                                 streamUpdate);
   int count = 0;
   while (ros::ok()) {
     ROS_DEBUG_STREAM_ONCE("Current frequency: " << freq);
@@ -97,12 +99,29 @@ int main(int argc, char **argv) {
     ss << stream;
     msg.data = ss.str();
 
-    ROS_INFO("%s", msg.data.c_str());
+    ROS_INFO_STREAM(msg.data.c_str());
 
     /**
      * The publish() function represents the way of sending messages.
      */
     chatter_pub.publish(msg);
+
+    // set translation
+    static tf::TransformBroadcaster br;
+    tf::Transform transform;
+    transform.setOrigin(
+        tf::Vector3(cos(ros::Time::now().toSec()),
+                    sin(ros::Time::now().toSec()), 0.0));
+    tf::Quaternion q;
+    q.setRPY(0, 0, 1);
+
+    // set rotation
+    transform.setRotation(q);
+
+    // broadcast the transform
+    br.sendTransform(
+        tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
+
 
     ros::spinOnce();
 
